@@ -14,8 +14,10 @@
     # dotnet-runtime_7
   ];
 
-
   # xdg.configFile."ghostty/config".source = ./xdg/ghosty/config;
+
+  xdg.configFile."opencode/AGENTS.md".source = ../../programs/opencode/rules/AGENTS.md;
+  xdg.configFile."opencode/commands".source = ../../programs/opencode/commands;
 
   programs = {
     opencode = {
@@ -36,5 +38,9 @@
       userName = "Matt Tyler";
       userEmail = "matt.tyler+github@qoria.com";
     };
+    jujutsu = import ../../programs/jujutsu.nix {
+      userName = "Matt Tyler";
+      userEmail = "matt.tyler+github@qoria.com";
+    };
   };
-} 
+}

@@ -1,64 +1,72 @@
 { pkgs, lib, ... }:
-let mypkgs = import ../packages/default.nix { inherit pkgs lib; };
-in {
-  home.packages = with pkgs; [
-    tmux
-    alacritty
-    bat
-    oh-my-zsh
-    zsh
-    git
-    gh
-    gnugrep
-    ripgrep
-    fd
-    jq
-    yq-go
-    # nerdfonts
-    direnv
-    colima
-    docker
-    docker-compose
-    yubikey-manager
+let
+  mypkgs = import ../packages/default.nix { inherit pkgs lib; };
+in
+{
+  home.packages =
+    with pkgs;
+    [
+      tmux
+      alacritty
+      bat
+      oh-my-zsh
+      zsh
+      git
+      gh
+      gnugrep
+      ripgrep
+      fd
+      jq
+      yq-go
+      # nerdfonts
+      direnv
+      colima
+      docker
+      docker-compose
+      yubikey-manager
 
-    go_1_25
-    gopls
-    delve
-    golangci-lint
+      go_1_25
+      gopls
+      delve
+      golangci-lint
 
-    # Required for mason lsp
-    nodejs-slim_24
+      # Required for mason lsp
+      nodejs-slim_24
 
-    # Nix language server
-    nixd
-    nixfmt
+      # Nix language server
+      nixd
+      nixfmt
 
-    # Markdown language server and tools
-    # marksman
+      # Markdown language server and tools
+      # marksman
 
-    wireguard-go
-    wireguard-tools
+      wireguard-go
+      wireguard-tools
 
-    rustc
-    cargo
+      rustc
+      cargo
 
-    tailwindcss
+      tailwindcss
 
-    lynx
-    (python312.withPackages (python-pkgs: [
-      # select Python packages here
-      python-pkgs.tiktoken
-      python-pkgs.flake8
-      python-pkgs.black
-      python-pkgs.isort
-    ]))
+      lynx
+      (python312.withPackages (python-pkgs: [
+        # select Python packages here
+        python-pkgs.tiktoken
+        python-pkgs.flake8
+        python-pkgs.black
+        python-pkgs.isort
+      ]))
 
-    opencode
+      opencode
+      bun
 
-    # rust debugging
-    # vscode-extensions.vadimcn.vscode-lldb
-  ] ++ (with mypkgs; [
-    # gopls_1_23
-  ])
-  ++ (with pkgs; [ ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts));
+      # rust debugging
+      # vscode-extensions.vadimcn.vscode-lldb
+    ]
+    ++ (with mypkgs; [
+      # gopls_1_23
+    ])
+    ++ (
+      with pkgs; [ ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts)
+    );
 }

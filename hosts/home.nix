@@ -2,7 +2,7 @@
 {
   imports = [ ./packages.nix ];
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "26.05";
 
   home.sessionVariables = {
     EDITOR = "neovim";
@@ -11,6 +11,9 @@
   fonts.fontconfig.enable = true;
 
   programs.home-manager.enable = true;
+
+  xdg.configFile."opencode/agents".source = ../programs/opencode/agents;
+  xdg.configFile."opencode/skills".source = ../programs/opencode/skills;
 
   programs.direnv = {
     enable = true;

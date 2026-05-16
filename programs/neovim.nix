@@ -47,7 +47,6 @@ in
     cmp-path
     cmp-cmdline
     trouble-nvim
-    mason-lspconfig-nvim
     guess-ident
     none-ls-nvim
     opencode-nvim
@@ -65,11 +64,6 @@ in
       plugin = nvim-treesitter.withAllGrammars;
       type = "lua";
       config = builtins.readFile ./nvim/treesitter.lua;
-    }
-    {
-      plugin = mason-nvim;
-      type = "lua";
-      config = builtins.readFile ./nvim/mason.lua;
     }
     {
       plugin = trouble-nvim;

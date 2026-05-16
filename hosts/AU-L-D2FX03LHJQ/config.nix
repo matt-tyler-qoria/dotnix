@@ -23,7 +23,7 @@
       "postman"
       "slack"
       "google-drive"
+      "obsidian"
     ];
   };
-
 }

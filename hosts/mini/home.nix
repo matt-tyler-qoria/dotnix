@@ -13,5 +13,9 @@
       userName = "Matt Tyler";
       userEmail = "me@matthewtyler.io";
     };
+    jujutsu = import ../../programs/jujutsu.nix {
+      userName = "Matt Tyler";
+      userEmail = "me@matthewtyler.io";
+    };
   };
-} 
+}

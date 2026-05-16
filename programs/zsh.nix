@@ -11,6 +11,9 @@
     vim = "nvim";
   };
   initExtra = ''
+    # Jujutsu (jj) shell completion
+    source <(jj util completion zsh)
+
     # Interactive tmux session attachment for Ghostty
     # Only run in new Ghostty windows (not in nested shells or tmux)
     if [[ -z "$TMUX" ]] && [[ -z "$TMUX_SESSION_PROMPTED" ]] && [[ "$SHLVL" -eq 1 ]]; then

@@ -2,13 +2,23 @@
   description = "My first nix flake";
 
   inputs = {
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+
     # Package sets
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
-    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    # nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
+    # nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
+    nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
 
     # Environment/system management
-    darwin.url = "github:lnl7/nix-darwin/master";
-    darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # darwin.url = "github:lnl7/nix-darwin/master";
+    # darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    darwin = {
+      url = "https://flakehub.com/f/nix-darwin/nix-darwin/0.1";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
@@ -26,7 +36,7 @@
   };
 
   # add the inputs declared above to the argument attribute set
-  outputs = { darwin, home-manager, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, ... }:
+  outputs = { determinate, darwin, home-manager, nixpkgs, nix-homebrew, homebrew-core, homebrew-cask, ... }:
     let
       allowUnfree = {
         nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "terraform" "cockroachdb-bin" ];
@@ -102,12 +112,13 @@
       darwinConfigurations."AU-L-D2FX03LHJQ" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          determinate.darwinModules.default
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
               enable = true;
               enableRosetta = true;
-              user = "matthewtyler";
+              user = "matt.tyler";
 
               taps = {
                 "homebrew/homebrew-core" = homebrew-core;
@@ -122,7 +133,11 @@
             homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
           })
           {
-            system.stateVersion = 5;
+	    determinateNix.enable = true;
+            nix = {
+                enable = false;
+            };
+            system.stateVersion = 6;
             system.primaryUser = "matt.tyler";
           }
           home-manager.darwinModules.home-manager
